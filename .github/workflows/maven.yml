@@ -55,4 +55,4 @@ jobs:
           
           curl -v -u "${TOMCAT_USER}:${TOMCAT_PASSWORD}" \
             --upload-file "$WAR_FILE" \
-            "http://${TOMCAT_HOST}/manager/text/deploy?path=/myapp&update=true"
+            "http://${TOMCAT_HOST}/manager app/text/deploy?path=/myapp&update=true"
