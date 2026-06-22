@@ -45,8 +45,14 @@ jobs:
 
       # 6. Deploy WAR via Tomcat Manager
       - name: Deploy to Tomcat
+        env:
+          TOMCAT_USER: ${{ secrets.TOMCAT_USER }}
+          TOMCAT_PASSWORD: ${{ secrets.TOMCAT_PASSWORD }}
+          TOMCAT_HOST: ${{ vars.TOMCAT_HOST }}
         run: |
           WAR_FILE=$(ls *.war)
           echo "Deploying $WAR_FILE to Tomcat..."
-          curl -v --upload-file "$WAR_FILE" \
-            "http://${{ secrets.TOMCAT_USER }}:${{ secrets.TOMCAT_PASSWORD }}@${{ secrets.TOMCAT_HOST }}/manager/text/deploy?path=/myapp&update=true"
+          
+          curl -v -u "${TOMCAT_USER}:${TOMCAT_PASSWORD}" \
+            --upload-file "$WAR_FILE" \
+            "http://${TOMCAT_HOST}/manager/text/deploy?path=/myapp&update=true"
