@@ -50,6 +50,14 @@ jobs:
         with:
           name: myapp
           path: target/*.war
+          
+  sonar_scan:
+    runs-on: self-hosted
+    environment: production  # <--- You must add this line if your secrets are environment-scoped!
+    steps:
+      - name: Run SonarQube Analysis
+        env: SONAR_HOST: ${{ secrets.SONAR_HOST }}
+          
       # 6. Install SonarQube Scanner CLI
       - name: Install SonarQube Scanner CLI
         run: |
